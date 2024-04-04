@@ -41,7 +41,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-artifacts  # Matches upload name
-          path: out  # Download location within the workspace
+          path: public  # Download location within the workspace
 
       - name: Analyze Test Results (Use downloaded artifacts)
         run: echo "Analyzing downloaded build artifacts from 'out' directory..."
