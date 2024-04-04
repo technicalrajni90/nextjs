@@ -3,44 +3,45 @@ name: Build Workflow
 on:
   push:
     branches:
-      - main # Set your main branch here
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Set up Node.js environment # Adjust this based on your project requirements
+      - name: Set up Node.js environment
         uses: actions/setup-node@v4
         with:
-          node-version: "18" # Adjust to your Node.js version
+          node-version: "18"
 
       - name: Install dependencies
-        run: npm install # Adjust this based on your project's package manager (npm, yarn, etc.)
+        run: npm install  # Adjust based on your project
 
       - name: Build
         run: |
-          npm run build  # Adjust this based on your build script or command
+          npm run build  # Adjust based on your build script
 
-      - name: Archive build artifacts
+      - name: Upload Build Artifacts (Double-check name & path)
         uses: actions/upload-artifact@v4
         with:
-          name: build-artifacts
-          path: out # Adjust this to the directory containing your build artifacts
+          name: build-artifacts  # Ensure this matches the download name
+          path: out  # Verify the directory containing build artifacts
 
-  analysis:  # Downloads artifacts for analysis
+  analysis:  # Downloads artifacts for analysis (Consider using conditional steps)
     runs-on: ubuntu-latest
-    needs: build  # This job depends on the test job completing first
+    needs: build  # Analysis depends on successful build
+
     steps:
       - uses: actions/checkout@v3
-      - name: Download test results  # Downloads artifacts from previous job
+
+      - name: Download Test Results (Verify name & path)
         uses: actions/download-artifact@v3
         with:
-          name: build-artifacts  # Name of the artifact to download (matches upload name)
+          name: build-artifacts  # Matches upload name
           path: out  # Download location within the workspace
 
-      - name: Analyze test results  # Use the downloaded artifacts here
-        run: echo "Deploying …."
+      - name: Analyze Test Results (Use downloaded artifacts)
+        run: echo "Analyzing downloaded build artifacts from 'out' directory..."
