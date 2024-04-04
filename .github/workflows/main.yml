@@ -40,8 +40,8 @@ jobs:
         - name: Download test results  # Downloads artifacts from previous job
           uses: actions/download-artifact@v3
             with:
-            name: test-results  # Name of the artifact to download (matches upload name)
-            path: dist  # Download location within the workspace
+            name: build-artifacts  # Name of the artifact to download (matches upload name)
+            path: out  # Download location within the workspace
 
         - name: Analyze test results  # Use the downloaded artifacts here
             run: echo "Deploying …."
