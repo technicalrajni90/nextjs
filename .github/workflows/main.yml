@@ -26,7 +26,7 @@ jobs:
           npm run build  # Adjust this based on your build script or command
 
       - name: Archive build artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifacts
-          path: dist # Adjust this to the directory containing your build artifacts
+          path: dist/ # Adjust this to the directory containing your build artifacts
