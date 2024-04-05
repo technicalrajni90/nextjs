@@ -44,4 +44,4 @@ jobs:
             name: build-artifacts
             path: app
         - name: Display structure of downloaded files
-          run: ls -R build-artifacts
+          run: ls -R ./build-artifacts
