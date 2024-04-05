@@ -3,32 +3,33 @@ name: Build Workflow
 on:
   push:
     branches:
-      - main
+      - main # Set your main branch here
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Set up Node.js environment
+      - name: Set up Node.js environment # Adjust this based on your project requirements
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: "18" # Adjust to your Node.js version
 
       - name: Install dependencies
-        run: npm install  # Adjust based on your project
+        run: npm install # Adjust this based on your project's package manager (npm, yarn, etc.)
 
       - name: Build
         run: |
-          npm run build  # Adjust based on your build script
+          npm run build  # Adjust this based on your build script or command
 
-      - name: Upload Build Artifacts (Double-check name & path)
+      - name: Archive build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: build-artifacts  # Ensure this matches the download name
-          path: out  # Verify the directory containing build artifacts
+          name: build-artifacts
+          path: out # Adjust this to the directory containing your build artifacts
 
   release:
       runs-on: ubuntu-latest
@@ -38,11 +39,6 @@ jobs:
       needs: build
 
       steps: 
-        - uses: actions/download-artifact@v3
-          with:
-            name: build-artifacts
-            path: out
-        - run: zip -r out.zip out/
-        - uses: ncipollo/release-action@v1
-          with:
-            artifacts: "out.zip"
+        - uses: actions/download-artifact@v4
+        - name: Display structure of downloaded files
+          run: ls -R
