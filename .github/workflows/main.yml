@@ -1,7 +1,7 @@
 name: Build and Download Next.js Artifacts
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 jobs:
   build-and-upload:
     runs-on: ubuntu-latest
